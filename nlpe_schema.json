@@ -1,0 +1,84 @@
+{
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "MIDB NLPE json schema",
+      "description": "Schema for NLPE dataset validation on MIDB",
+      "type": "object",
+      "properties": {
+          "application":{
+              "type": "string",
+              "enum": ["NLP-Extraction"]
+          },
+          "version":{
+              "type": "string",
+              "pattern": "^[1-9].[0-9].[0-9]$"
+          },
+          "extraction":{
+              "type": "object",
+              "properties": {
+                  "target":{
+                      "type": "array",
+                      "items": {
+                          "type": "string",
+                          "minItems":1
+                      }
+                  },
+                  "method":{
+                      "type": "string",
+                      "enum": ["large language model", "regex", "manual"],
+                  },
+                  "model":{
+                      "type": "string"
+                  },
+                  "postprocessed":{
+                      "type": "boolean",
+                  },
+              "required":["target"]
+  
+          },
+          "date":{
+              "type": "string",
+              "pattern":"[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])T(0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])(:([0-5][0-9]))?((\\+|-)?(((0[0-9]|1[0-2]):([0-9][0-5])))|([A-Za-z]+))?$"
+          },
+          "authors":{
+              "type": "array",
+              "items": {
+                  "type": "string",
+                  "minItems":1
+              }
+          },
+          "extractions":{
+              "type": "array",
+              "items": {
+                  "type": "object",
+                  "properties": {
+                      "source_text":{
+                          "type":"string"
+                      },
+                      "composition":{
+                          "type":"string"
+                      },
+                      "elements":{
+                          "type": "array",
+                          "items": {"type": "string"}
+                      },
+                      "fractions":{
+                          "type": "array",
+                          "items": {
+                              "type": "number"
+                          }
+                      },
+                      "phase":{
+                          "type": "string"
+                      },
+                      "source_doi":{
+                          "type": "string"
+                      }
+                  },
+                  "required":["source_text", "source_doi"]
+  
+              }
+          }
+      }
+  },
+  "required": ["extractions","authors", "date", "extraction", "version", "application"]
+}
